@@ -1,23 +1,27 @@
-import React, {useEffect, useState} from 'react'
-import axios from 'axios'
+import React,  {useState} from 'react'
 
-function useGetPost () {
-  const [post, setPost] = useState({})
-  useEffect(()=>{
-    axios.get('heeps://jsonplaceholder.typicode.com/posts/1').then(res => {
-      setPost(res.data)
-    })
-  },[])
-  return [post, setPost]
+
+function useUpdateInputed (initialValue) {
+  const [value, setValue] = useState(initialValue)
+  return { 
+    value,
+    onChange: event => setValue(event.target.value)
+  }
 }
 
 const App = () => {
-  const [post, setPost] = useGetPost()
+  const usernameInput = useUpdateInputed('');
+  const passwordInput = useUpdateInputed('');
+  const submitForm = event => {
+    event.preventDefault();
+    console.log(usernameInput.value, passwordInput.value)
+  }
   return (
-    <div>
-      <span>{ post.title }</span>
-      <span>{ post.body }</span>
-    </div>
+    <form onSubmit={submitForm}>
+      <input type="text" name="username" {...usernameInput} />
+      <input type="password" name="password" {...passwordInput} />
+      <input type="submit" />
+    </form>
   )
 }
 
