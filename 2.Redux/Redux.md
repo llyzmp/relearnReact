@@ -33,5 +33,15 @@ store.dispatch({type: 'description...'});
 
 ### 在Redux项目中加入Redux的好处
 使用Redux管理数据，由于Store独立于组件，使得数据管理独立于组件，解决了组件与组件之间传递数据困难的问题
+
 <img src="../assets/imgs/redux2.png">
 
+#### 工作流程
+1. 组件通过dispatch方法出发action
+2. Store 接收Action并将Action分发给Reducer
+3. Reducer根据Action类型对状态进行更改并将更改后的状态返回给Store
+4. 组件订阅了Store中的状态， Store中的状态更新会同步到组件
+   
+<img src="../assets/imgs/redux3.png">
+   
+   
