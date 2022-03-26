@@ -1,23 +1,28 @@
-import React,  {useState, useEffect} from 'react'
-import axios from 'axios'
+import React,  {useState} from 'react'
 
-// 自定义hook函数
-function useGetPost() {
-  const [post, setPost] = useState({});
-  useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts/1')
-      .then(res => setPost(res.data));
-  }, [])
-  return [post, setPost]
+
+function useUpdateInputed (initialValue) {
+  const [value, setValue] = useState(initialValue)
+  return { 
+    value,
+    onChange: event => setValue(event.target.value)
+  }
 }
 
-
-
-function App() {
-  const [ post, setPost ] = useGetPost()
-  return <div>
-    <div>{ post.title }</div>
-    <div>{ post.body }</div>
-  </div>
+const App = () => {
+  const usernameInput = useUpdateInputed('');
+  const passwordInput = useUpdateInputed('');
+  const submitForm = event => {
+    event.preventDefault();
+    console.log(usernameInput.value, passwordInput.value)
+  }
+  return (
+    <form onSubmit={submitForm}>
+      <input type="text" name="username" {...usernameInput} />
+      <input type="password" name="password" {...passwordInput} />
+      <input type="submit" />
+    </form>
+  )
 }
+
 export default App
